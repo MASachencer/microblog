@@ -4,11 +4,15 @@ click==6.7
 coverage==4.5
 decorator==4.2.1
 defusedxml==0.5.0
+dominate==2.3.1
 Flask==0.12.2
 Flask-Babel==0.11.2
+Flask-Bootstrap==3.3.7.1
 Flask-Login==0.4.1
 Flask-Mail==0.9.1
+Flask-Moment==0.6.0
 Flask-OpenID==1.2.5
+Flask-Script==2.0.6
 Flask-SQLAlchemy==2.3.2
 Flask-WhooshAlchemy==0.56
 Flask-WTF==0.14.2
@@ -25,6 +29,7 @@ SQLAlchemy==1.2.2
 sqlalchemy-migrate==0.11.0
 sqlparse==0.2.4
 Tempita==0.5.2
+visitor==0.1.3
 Werkzeug==0.14.1
 Whoosh==2.7.4
 WTForms==2.1
