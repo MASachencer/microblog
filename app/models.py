@@ -7,7 +7,7 @@ class User(db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     posts = db.relationship('Posts', backref='author', lazy='dynamic')
 
-    def __repr__():
+    def __repr__(self):
         return f'<User {self.nickname:r}>'
 
 
@@ -17,5 +17,5 @@ class Posts(db.Model):
     timestamp = db.Column(db.DateTime)
     userId = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __repr__():
+    def __repr__(self):
         return f'<Post {self.body:r}>'
