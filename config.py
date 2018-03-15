@@ -1,11 +1,12 @@
-from os.path import abspath, dirname, join
+from os import path
 
-basedir = abspath(dirname(__file__))
-SQLALCHEMY_DATABASE_URI = f"sqlite:///{join(basedir, 'app.db')}"
-SQLALCHEMY_MIGRATE_REPO = join(basedir, 'dbRepository')
-
+DEBUG = False
 CSRF_ENABLED = True
 SECRET_KEY = 'you-will-never-guess'
+
+basedir = path.abspath(path.dirname(__file__))
+SQLALCHEMY_DATABASE_URI = f"sqlite:///{path.join(basedir, 'app.db')}"
+SQLALCHEMY_MIGRATE_REPO = path.join(basedir, 'dbRepository')
 
 OPENID_PROVIDERS = [
     {'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id'},
