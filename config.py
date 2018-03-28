@@ -9,6 +9,12 @@ SQLALCHEMY_DATABASE_URI = f"sqlite:///{path.join(basedir, 'app.db')}"
 SQLALCHEMY_MIGRATE_REPO = path.join(basedir, 'dbRepository')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+MAIL_SERVER = 'localhost'
+MAIL_PORT = 25
+MAIL_USERNAME = None
+MAIL_PASSWORD = None
+ADMINS = ['admin@email.com']
+
 OPENID_PROVIDERS = [
     {'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id'},
     {'name': 'Yahoo', 'url': 'https://me.yahoo.com'},
