@@ -1,5 +1,6 @@
 from hashlib import md5
-from app import db
+import flask_whooshalchem as whooshalchem
+from app import app, db
 
 followers = db.Table(
     'followers',
@@ -72,10 +73,15 @@ class User(db.Model):
 
 
 class Post(db.Model):
+    __searchable__ = ['body']
+
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(128))
+    body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return f'<Post {self.body!r}>'
+
+
+whooshalchem.whoosh_index(app, Post)
