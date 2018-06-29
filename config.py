@@ -1,16 +1,18 @@
+# -*- coding: utf-8 -*-
+
 from os import path, environ
 
 DEBUG = False
 CSRF_ENABLED = True
 SECRET_KEY = 'you-will-never-guess'
 
-appdir = path.abspath(path.dirname(__file__))
-basedir = path.join(appdir, 'data')
-SQLALCHEMY_DATABASE_URI = f"sqlite:///{path.join(basedir, 'app.db')}"
-SQLALCHEMY_MIGRATE_REPO = path.join(appdir, 'migrations')
+basicDir = path.abspath(path.dirname(__file__))
+baseDir = path.join(basicDir, 'base')
+SQLALCHEMY_DATABASE_URI = f"sqlite:///{path.join(baseDir, 'app.sqlite')}"
+SQLALCHEMY_MIGRATE_REPO = path.join(basicDir, 'migrations')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-MAIL_SERVER = 'localhost'
+MAIL_SERVER = '127.0.0.1'
 MAIL_PORT = 25
 MAIL_USE_SSL = False
 MAIL_USE_TLS = False
@@ -20,7 +22,7 @@ ADMINS = ['admin@email.com']
 
 POSTS_PER_PAGE = 3
 
-WHOOSH_BASE = path.join(basedir, 'search.db')
+WHOOSH_BASE = path.join(baseDir, 'search.sqlite')
 MAX_SEARCH_RESULTS = 50
 
 OPENID_PROVIDERS = [

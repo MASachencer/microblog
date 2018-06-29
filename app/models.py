@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from hashlib import md5
 import flask_whooshalchem as whooshalchem
 from app import app, db

@@ -1,11 +1,12 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 from datetime import datetime, timedelta
 from os import path
 from unittest import TestCase, main
 from app import app, db
 from app.models import User, Post
-from config import basedir
+from config import baseDir
 
 
 class TestCase(TestCase):
@@ -13,35 +14,35 @@ class TestCase(TestCase):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
         app.config['SQLALCHEMY_DATABASE_URI'] = \
-            f"sqlite:///{path.join(basedir, 'test.db')}"
+            f"sqlite:///{path.join(baseDir, 'test.sqlite')}"
         db.create_all()
 
     def tearDown(self):
         db.drop_all()
 
     def test_avatar(self):
-        u = User(nickname='mas', email='mas@email.com')
+        u = User(nickname='user', email='user@email.com')
         avatar = u.avatar(128)
         expected = \
             'http://www.gravatar.com/avatar/258831cdbf17d25332d71f3e06f7723f'
         assert avatar[0:len(expected)] == expected
 
     def test_make_unique_nickname(self):
-        u = User(nickname='mas', email='mas@email.com')
+        u = User(nickname='user', email='user@email.com')
         db.session.add(u)
         db.session.commit()
-        nickname = User.make_unique_nickname('mas')
+        nickname = User.make_unique_nickname('user')
         assert nickname != 'mas'
-        u = User(nickname=nickname, email='msa@email.com')
+        u = User(nickname=nickname, email='user@email.com')
         db.session.add(u)
         db.session.commit()
-        nickname2 = User.make_unique_nickname('mas')
-        assert nickname2 != 'mas'
+        nickname2 = User.make_unique_nickname('user')
+        assert nickname2 != 'user'
         assert nickname2 != nickname
 
     def test_follow(self):
-        u1 = User(nickname='mas', email='mas@email.com')
-        u2 = User(nickname='msa', email='msa@email.com')
+        u1 = User(nickname='user1', email='user1@email.com')
+        u2 = User(nickname='user2', email='user2@email.com')
         db.session.add(u1)
         db.session.add(u2)
         db.session.commit()
@@ -52,9 +53,9 @@ class TestCase(TestCase):
         assert u1.follow(u2) is None
         assert u1.is_following(u2)
         assert u1.followed.count() == 1
-        assert u1.followed.first().nickname == 'msa'
+        assert u1.followed.first().nickname == 'user2'
         assert u2.followers.count() == 1
-        assert u2.followers.first().nickname == 'mas'
+        assert u2.followers.first().nickname == 'user1'
         u = u1.unfollow(u2)
         assert u is not None
         db.session.add(u)
@@ -64,22 +65,22 @@ class TestCase(TestCase):
         assert u2.followers.count() == 0
 
     def test_follow_posts(self):
-        u1 = User(nickname='mas', email='mas@email.com')
-        u2 = User(nickname='msa', email='msa@email.com')
-        u3 = User(nickname='shen', email='shen@email.com')
-        u4 = User(nickname='chen', email='chen@email.com')
+        u1 = User(nickname='user1', email='user1@email.com')
+        u2 = User(nickname='user2', email='user2@email.com')
+        u3 = User(nickname='user3', email='user3@email.com')
+        u4 = User(nickname='user4', email='user4@email.com')
         db.session.add(u1)
         db.session.add(u2)
         db.session.add(u3)
         db.session.add(u4)
         utcnow = datetime.utcnow()
-        p1 = Post(body='post from mas', author=u1,
+        p1 = Post(body='post from user1', author=u1,
                   timestamp=utcnow + timedelta(seconds=1))
-        p2 = Post(body='post from msa', author=u2,
+        p2 = Post(body='post from user2', author=u2,
                   timestamp=utcnow + timedelta(seconds=2))
-        p3 = Post(body='post from shen', author=u3,
+        p3 = Post(body='post from user3', author=u3,
                   timestamp=utcnow + timedelta(seconds=3))
-        p4 = Post(body='post from chen', author=u4,
+        p4 = Post(body='post from user4', author=u4,
                   timestamp=utcnow + timedelta(seconds=4))
         db.session.add(p1)
         db.session.add(p2)
